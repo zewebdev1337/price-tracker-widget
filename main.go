@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 
 	"github.com/therecipe/qt/core"
@@ -55,7 +56,7 @@ func NewBinanceWidget(parent widgets.QWidget_ITF, fo core.Qt__WindowType, symbol
 // initUI sets up the UI for the BinanceWidget.
 // It sets the window flags and attributes, creates a new vertical box layout, and adds a QLabel widget for each symbol.
 // It then sets the layout for the widget, updates the price, and starts a timer to update the price every 120 seconds.
-// It also connects the mouse press, move, context menu, and double-click events to their respective methods.
+// It also connects the mouse press, move, and context menu events to their respective methods.
 func (w *BinanceWidget) initUI() {
 	w.SetWindowFlags(core.Qt__FramelessWindowHint | core.Qt__WindowStaysOnTopHint)
 	w.SetAttribute(core.Qt__WA_TranslucentBackground, true)
@@ -111,7 +112,14 @@ func (w *BinanceWidget) updateLabel(symbol string) {
 		w.priceLabels[symbol].SetText(fmt.Sprintf("Error: %v", err))
 		return
 	}
-	w.priceLabels[symbol].SetText(fmt.Sprintf("%s/USDT: %s", symbol, data["price"]))
+	price := data["price"]
+	// Remove trailing zeroes
+	price = strings.TrimRight(price, "0")
+	// If the price ends with a decimal point, remove it
+	if strings.HasSuffix(price, ".") {
+		price = price[:len(price)-1]
+	}
+	w.priceLabels[symbol].SetText(fmt.Sprintf("%s/USDT: %s", symbol, price))
 	w.priceLabels[symbol].Font().SetPointSize(12)
 }
 
