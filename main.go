@@ -55,7 +55,7 @@ func NewBinanceWidget(parent widgets.QWidget_ITF, fo core.Qt__WindowType, symbol
 // initUI sets up the UI for the BinanceWidget.
 // It sets the window flags and attributes, creates a new vertical box layout, and adds a QLabel widget for each symbol.
 // It then sets the layout for the widget, updates the price, and starts a timer to update the price every 120 seconds.
-// It also connects the mouse press, move, and context menu events to their respective methods.
+// It also connects the mouse press, move, context menu, and double-click events to their respective methods.
 func (w *BinanceWidget) initUI() {
 	w.SetWindowFlags(core.Qt__FramelessWindowHint | core.Qt__WindowStaysOnTopHint)
 	w.SetAttribute(core.Qt__WA_TranslucentBackground, true)
@@ -112,6 +112,7 @@ func (w *BinanceWidget) updateLabel(symbol string) {
 		return
 	}
 	w.priceLabels[symbol].SetText(fmt.Sprintf("%s/USDT: %s", symbol, data["price"]))
+	w.priceLabels[symbol].Font().SetPointSize(12)
 }
 
 // mousePressEvent is called when the mouse button is pressed on the widget.
@@ -142,6 +143,7 @@ func (w *BinanceWidget) contextMenuEvent(event *gui.QContextMenuEvent) {
 	// Set the style sheet of all price labels to the new style sheet
 	for _, label := range w.priceLabels {
 		label.SetStyleSheet(styleSheet)
+		label.Font().SetPointSize(12)
 	}
 }
 
