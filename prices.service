@@ -1,0 +1,13 @@
+[Unit]
+Description=Crypto price tracker service. It starts after successfully connecting to the internet
+After=network.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/price-tracker-widget
+WorkingDirectory=/usr/local/bin/
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target

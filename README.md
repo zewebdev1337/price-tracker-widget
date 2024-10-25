@@ -22,11 +22,9 @@ A simple, frameless, always-on-top desktop widget that displays real-time prices
    git clone https://github.com/zewebdev1337/price-tracker-widget.git
    ```
 
-2. **Build and run:**
+2. **Build and install:**
    ```bash
-   cd pricetrack
-   go build
-   ./price-tracker-widget
+   ./install.sh
    ```
 
 ## Configuration
