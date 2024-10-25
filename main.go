@@ -59,6 +59,7 @@ func NewBinanceWidget(parent widgets.QWidget_ITF, fo core.Qt__WindowType, symbol
 // It also connects the mouse press, move, and context menu events to their respective methods.
 func (w *BinanceWidget) initUI() {
 	w.SetWindowFlags(core.Qt__FramelessWindowHint | core.Qt__WindowStaysOnTopHint)
+	w.SetAttribute(core.Qt__WA_X11NetWmWindowTypeDock, true)
 	w.SetAttribute(core.Qt__WA_TranslucentBackground, true)
 	w.layout = widgets.NewQVBoxLayout()
 
